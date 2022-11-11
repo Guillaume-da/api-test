@@ -5,7 +5,6 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const readMessages = require('./messages/readMessages')
-const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger.yaml')
@@ -36,7 +35,6 @@ app.post('/deviceInfo', (req, res) => {
 
 readMessages
 
-// API Documentation
 if (process.env.NODE_ENV !== 'production') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
   }

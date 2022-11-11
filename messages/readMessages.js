@@ -35,7 +35,7 @@ const { EventHubConsumerClient } = require("@azure/event-hubs");
 // you can skip the Azure CLI commands above, and assign the connection string directly here.
 const connectionString = `Endpoint=${process.env.EVENTHUBSCOMPATIBLEENDPOINT};EntityPath=${process.env.EVENTHUBSCOMPATIBLEPATH};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBSASKEY}`;
 
-var printError = function (err) {
+const printError = function (err) {
   console.log(err.message);
 };
 
@@ -43,7 +43,7 @@ var printError = function (err) {
 // - Telemetry is sent in the message body
 // - The device can add arbitrary properties to the message
 // - IoT Hub adds system properties, such as Device Id, to the message.
-var printMessages = function (messages) {
+const printMessages = function (messages) {
   for (const message of messages) {
     console.log("Telemetry received: ");
     console.log(JSON.stringify(message.body));
