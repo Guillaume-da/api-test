@@ -1,0 +1,48 @@
+swagger: '2.0'
+info:
+  title: Test api
+  description: API allowing to retrieve primary and secundary keys from a device in IOT Hub, and listen messages sended from a specific device to IOT Hub
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:8080
+basePath: /
+schemes:
+  - http
+paths:
+  /deviceInfo:
+    post:
+      tags:
+        - Test
+      summary: Allows to retrieve primary and secundary keys from a device in IOT Hub
+      description: Sends device ID to IOT Hub and returns primary and secondary keys
+      parameters:
+        - in: body
+          name: body
+          description: Device ID
+          required: true
+          schema:
+            $ref: '#/definitions/Device'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Primary and secondary keys returned
+          schema:
+            $ref: '#/definitions/DeviceConnected'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+definitions:
+  Device:
+    properties:
+      deviceId:
+        type: string
+        description: device ID
+  DeviceConnected:
+    type: object
+    properties:
+      primaryKey:
+        type: string
+      secondaryKey:
+        type: string
