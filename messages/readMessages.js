@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-function readMessages(sharedKeyName, sharedKey){
+function readMessages(messagesConnectionString){
 	// Copyright (c) Microsoft Corporation.
 	// Licensed under the MIT Licence.
 	/*
@@ -35,7 +35,7 @@ function readMessages(sharedKeyName, sharedKey){
 
 	// If you have access to the Event Hub-compatible connection string from the Azure portal, then
 	// you can skip the Azure CLI commands above, and assign the connection string directly here.
-	const connectionString = `Endpoint=${process.env.EVENTHUBSCOMPATIBLEENDPOINT};EntityPath=${process.env.EVENTHUBSCOMPATIBLEPATH};SharedAccessKeyName=${sharedKeyName};SharedAccessKey=${sharedKey}`
+	const connectionString = messagesConnectionString
 
 	const printError = function (err) {
 		console.log(err.message)

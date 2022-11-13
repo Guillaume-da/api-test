@@ -11,14 +11,15 @@ const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger.yaml')
 const iothub = require('azure-iothub')
+
 const connectionString = 'HostName=' + process.env.HOSTNAME + ';SharedAccessKeyName=' + process.env.SHARED_ACCESS_KEY_NAME + ';SharedAccessKey=' + process.env.SHARED_ACCESS_KEY + ';'
+const messagesConnectionString = 'Endpoint=' + process.env.EVENTHUBSCOMPATIBLEENDPOINT + ';EntityPath=' + process.env.EVENTHUBSCOMPATIBLEPATH + ';SharedAccessKeyName=' + process.env.SHARED_ACCESS_KEY_NAME + ';SharedAccessKey=' + process.env.SHARED_ACCESS_KEY + ';'
 const registry = iothub.Registry.fromConnectionString(connectionString)
 
 app.post('/deviceInfo', (req, res) => {
 	const deviceId = req.body.deviceId
 	registry.list(function (err, deviceList) {
-		const searchedDevice = deviceList.find(Device => Device.deviceId === deviceId)
-                        
+		const searchedDevice = deviceList.find(Device => Device.deviceId === deviceId)              
 		if(!searchedDevice) return res.status(400).json('Device ID unknown')
 		deviceList.forEach(function (device) {
 			if(device.deviceId === deviceId){
@@ -33,7 +34,7 @@ app.post('/deviceInfo', (req, res) => {
 	})
 })
 
-messages.readMessages(process.env.SHARED_ACCESS_KEY_NAME, process.env.SHARED_ACCESS_KEY)
+messages.readMessages(messagesConnectionString)
 
 if (process.env.NODE_ENV !== 'production') {
 	app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
